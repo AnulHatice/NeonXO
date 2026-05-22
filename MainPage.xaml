@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NeonXO.MainPage"
+             BackgroundColor="#121212">
+
+    <Grid>
+        <VerticalStackLayout x:Name="GameView" Spacing="20" Padding="30" VerticalOptions="Center" IsVisible="False">
+            <Label x:Name="TurnLabel" TextColor="#00FFFF" FontSize="20" HorizontalOptions="Center" />
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
+                <Label x:Name="ScoreX" TextColor="#FF00FF" FontSize="22" FontAttributes="Bold" />
+                <Label x:Name="ScoreO" TextColor="#00FFFF" FontSize="22" FontAttributes="Bold" />
+            </HorizontalStackLayout>
+            <Grid x:Name="GameGrid" ColumnSpacing="12" RowSpacing="12" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="0" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="0" Grid.Column="1" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="0" Grid.Column="2" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="1" Grid.Column="0" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="1" Grid.Column="1" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="1" Grid.Column="2" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="2" Grid.Column="0" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="2" Grid.Column="1" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+                <Button Grid.Row="2" Grid.Column="2" Clicked="OnButtonClicked" BackgroundColor="#1E1E1E" FontSize="35" CornerRadius="15" BorderColor="#00FFFF" BorderWidth="2"/>
+            </Grid>
+            <Button Text="Ana Menü" Clicked="BackToMenu" BackgroundColor="Transparent" TextColor="Gray" BorderColor="Gray" BorderWidth="1" CornerRadius="20" HorizontalOptions="Center" WidthRequest="120" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout x:Name="EntryView" Spacing="20" Padding="40" VerticalOptions="Center" IsVisible="False">
+            <Label Text="NEON XO" FontSize="50" FontAttributes="Bold" TextColor="#00FFFF" HorizontalOptions="Center">
+                <Label.Shadow>
+                    <Shadow Brush="#00FFFF" Offset="0,0" Radius="15" />
+                </Label.Shadow>
+            </Label>
+
+            <Border Stroke="#FF00FF" StrokeThickness="2" StrokeShape="RoundRectangle 15" BackgroundColor="#1E1E1E" Padding="20">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="OYUNCU İSİMLERİ" TextColor="#FF00FF" HorizontalOptions="Center" FontAttributes="Bold" />
+                    <Entry x:Name="Player1Entry" Placeholder="1. Oyuncu (X)" PlaceholderColor="Gray" TextColor="White" />
+                    <Entry x:Name="Player2Entry" Placeholder="2. Oyuncu (O)" PlaceholderColor="Gray" TextColor="White" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="MOD SEÇİN" TextColor="#00FFFF" HorizontalOptions="Center" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button x:Name="BotModeBtn" Text="BOT" Clicked="SelectBotMode" BackgroundColor="#00FFFF" TextColor="Black" WidthRequest="120" CornerRadius="10" />
+                <Button x:Name="FriendModeBtn" Text="ARKADAŞ" Clicked="SelectFriendMode" BackgroundColor="#1E1E1E" TextColor="White" BorderColor="#FF00FF" BorderWidth="1" WidthRequest="120" CornerRadius="10" />
+            </HorizontalStackLayout>
+
+            <Button Text="OYUNU BAŞLAT" Clicked="HandleStartGame" BackgroundColor="#FF00FF" TextColor="White" FontAttributes="Bold" CornerRadius="25" HeightRequest="60" Margin="0,10,0,0" />
+        </VerticalStackLayout>
+
+        <Grid x:Name="LoadingView" BackgroundColor="#121212" IsVisible="True">
+            <VerticalStackLayout VerticalOptions="Center" Spacing="30">
+                <Label x:Name="LoadingLogo" Text="XO" FontSize="80" FontAttributes="Bold" TextColor="#FF00FF" HorizontalOptions="Center">
+                    <Label.Shadow>
+                        <Shadow Brush="#FF00FF" Offset="0,0" Radius="20" />
+                    </Label.Shadow>
+                </Label>
+                <ActivityIndicator IsRunning="True" Color="#00FFFF" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <ContentView x:Name="CustomPopup" IsVisible="False" BackgroundColor="#CC000000">
+            <Border BackgroundColor="#1E1E1E" Stroke="#FF00FF" StrokeThickness="2" StrokeShape="RoundRectangle 20" Padding="25" WidthRequest="300" HeightRequest="220" VerticalOptions="Center" HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+                    <Label x:Name="PopupTitle" TextColor="#00FFFF" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label x:Name="PopupMessage" TextColor="White" FontSize="18" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Button Text="Tamam" Clicked="ClosePopupClicked" BackgroundColor="#FF00FF" TextColor="White" CornerRadius="15" HeightRequest="45" />
+                </VerticalStackLayout>
+            </Border>
+        </ContentView>
+    </Grid>
+</ContentPage>
